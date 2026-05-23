@@ -1,0 +1,23 @@
+services:
+  spec:
+    build:
+      context: .
+      dockerfile: docker/spec/Dockerfile
+    profiles:
+      - compile
+    volumes:
+      - ./spec/tsp-output:/spec/tsp-output
+
+  backend:
+    image: golang:1.23-alpine
+    working_dir: /app
+    command: sh -c "echo 'backend not implemented yet' && exit 0"
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    ports:
+      - "80:80"

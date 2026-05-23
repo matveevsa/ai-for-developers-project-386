@@ -1,5 +1,7 @@
 using TypeSpec.Http;
 
+namespace BookingSystem;
+
 @minLength(1)
 @maxLength(100)
 scalar NonEmptyString extends string;

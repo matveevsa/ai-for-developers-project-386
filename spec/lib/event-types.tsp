@@ -1,5 +1,7 @@
 using TypeSpec.Http;
 
+namespace BookingSystem;
+
 @route("/api/event-types")
 interface EventTypes {
   @post

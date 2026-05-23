@@ -1,5 +1,7 @@
 using TypeSpec.Http;
 
+namespace BookingSystem;
+
 @route("/api/owners/{ownerId}/bookings")
 interface OwnerBookings {
   @get
