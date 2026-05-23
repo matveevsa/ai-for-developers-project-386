@@ -1,6 +1,10 @@
 import client from './client'
-import type { Booking } from '@/types/api'
+import type { BookingEnriched } from '@/types/api'
 
-export function listUpcomingBookings(ownerId: string): Promise<Booking[]> {
+export function deleteBooking(id: string): Promise<void> {
+  return client.delete(`/bookings/${id}`).then(() => {})
+}
+
+export function listUpcomingBookings(ownerId: string): Promise<BookingEnriched[]> {
   return client.get(`/owners/${ownerId}/bookings`).then((r) => r.data)
 }

@@ -25,20 +25,20 @@ const emit = defineEmits<{
 <style scoped>
 .slot-btn {
   padding: 0.5rem 1rem;
-  border: 1px solid var(--mantine-color-blue-3);
+  border: 1px solid var(--mantine-color-orange-3);
   border-radius: var(--mantine-radius-sm);
   background: white;
-  color: var(--mantine-color-blue-8);
+  color: var(--mantine-color-orange-8);
   cursor: pointer;
   font-size: 0.875rem;
   transition: 0.15s;
 }
 .slot-btn:hover {
-  background: var(--mantine-color-blue-0);
+  background: var(--mantine-color-orange-0);
 }
 .slot-btn.selected {
-  background: var(--mantine-color-blue-6);
+  background: var(--mantine-color-orange-6);
   color: white;
-  border-color: var(--mantine-color-blue-6);
+  border-color: var(--mantine-color-orange-6);
 }
 </style>

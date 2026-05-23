@@ -8,3 +8,11 @@ export function listEventTypes(): Promise<EventType[]> {
 export function createEventType(data: EventTypeCreate): Promise<EventType> {
   return client.post('/event-types', data).then((r) => r.data)
 }
+
+export function updateEventType(id: string, data: EventTypeCreate): Promise<EventType> {
+  return client.put(`/event-types/${id}`, data).then((r) => r.data)
+}
+
+export function deleteEventType(id: string): Promise<void> {
+  return client.delete(`/event-types/${id}`)
+}

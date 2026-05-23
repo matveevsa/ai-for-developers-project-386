@@ -1,52 +1,60 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import dayjs from 'dayjs'
-import type { Slot } from '@/types/api'
-import SlotButton from './SlotButton.vue'
 
 const props = defineProps<{
-  slots: Slot[]
-  selectedSlotId?: string
+  selectedDate?: string
+  availability?: Record<string, { available: number; total: number }>
 }>()
 
 const emit = defineEmits<{
-  selectSlot: [slotId: string]
+  selectDate: [date: string]
 }>()
 
-const days = computed(() => {
-  const result: { date: string; label: string; slots: Slot[] }[] = []
-  const today = dayjs()
-  for (let i = 0; i < 14; i++) {
-    const date = today.add(i, 'day')
-    const dateStr = date.format('YYYY-MM-DD')
-    result.push({
-      date: dateStr,
-      label: i === 0 ? 'Сегодня' : date.format('DD.MM'),
-      slots: props.slots.filter((s) => dayjs(s.startTime).format('YYYY-MM-DD') === dateStr),
-    })
+const dayNames = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+
+const days = Array.from({ length: 14 }, (_, i) => {
+  const date = dayjs().add(i, 'day')
+  return {
+    date: date.format('YYYY-MM-DD'),
+    label: i === 0 ? 'Сегодня' : date.format('DD.MM'),
+    isPast: date.isBefore(dayjs(), 'day'),
+    isWeekend: date.day() === 0 || date.day() === 6,
   }
-  return result
 })
 
-function isPast(date: string): boolean {
-  return dayjs(date).isBefore(dayjs(), 'day')
+function dayClass(day: (typeof days)[0]) {
+  if (day.date === props.selectedDate) return 'day selected'
+
+  if (props.availability) {
+    const a = props.availability[day.date]
+    if (a && a.total > 0 && a.available === 0) return 'day full'
+    if (a && a.available > 0) return 'day free'
+  }
+
+  if (day.isPast || day.isWeekend) return 'day dim'
+  return 'day'
+}
+
+function dayCount(day: (typeof days)[0]) {
+  if (!props.availability) return
+  const a = props.availability[day.date]
+  if (!a || a.total === 0) return
+  if (a.available > 0) return `слотов: ${a.available}`
+  return 'занято'
 }
 </script>
 
 <template>
   <div class="calendar">
-    <div v-for="day in days" :key="day.date" class="day-col" :class="{ dim: isPast(day.date) && day.slots.length === 0 }">
-      <div class="day-header">{{ day.label }}</div>
-      <div class="slots">
-        <div v-if="day.slots.length === 0" class="no-slots">Нет слотов</div>
-        <SlotButton
-          v-for="slot in day.slots"
-          :key="slot.id"
-          :slot="slot"
-          :selected="slot.id === selectedSlotId"
-          @select="emit('selectSlot', $event)"
-        />
-      </div>
+    <div v-for="d in dayNames" :key="d" class="day-header">{{ d }}</div>
+    <div
+      v-for="day in days"
+      :key="day.date"
+      :class="dayClass(day)"
+      @click="emit('selectDate', day.date)"
+    >
+      <div class="day-label">{{ day.label }}</div>
+      <div v-if="dayCount(day)" class="day-count">{{ dayCount(day) }}</div>
     </div>
   </div>
 </template>
@@ -57,29 +65,53 @@ function isPast(date: string): boolean {
   grid-template-columns: repeat(7, 1fr);
   gap: 0.5rem;
 }
-.day-col {
-  border: 1px solid var(--mantine-color-gray-3);
+.day {
+  padding: 0.75rem 0.5rem;
   border-radius: var(--mantine-radius-md);
-  padding: 0.5rem;
-  min-height: 120px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.15s;
+  border: 2px solid var(--mantine-color-gray-3);
+  background: white;
 }
-.day-col.dim {
-  opacity: 0.4;
+.day:hover {
+  border-color: var(--mantine-color-orange-4);
 }
-.day-header {
+.day-label {
   font-weight: 600;
   font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-  text-align: center;
 }
-.slots {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-}
-.no-slots {
+.day-header {
   font-size: 0.75rem;
-  color: var(--mantine-color-gray-5);
+  font-weight: 600;
   text-align: center;
+  color: var(--mantine-color-gray-5);
+  padding: 0.25rem 0;
+}
+.day-count {
+  font-size: 0.65rem;
+  margin-top: 0.125rem;
+}
+.day.dim {
+  opacity: 0.35;
+  cursor: default;
+}
+.day.selected {
+  background: var(--mantine-color-orange-1);
+  border-color: var(--mantine-color-orange-6);
+}
+.day.free {
+  background: #d1fae5;
+  border-color: #a7f3d0;
+}
+.day.free:hover {
+  border-color: #059669;
+}
+.day.full {
+  background: #fee2e2;
+  border-color: #fecaca;
+}
+.day.full:hover {
+  border-color: #dc2626;
 }
 </style>

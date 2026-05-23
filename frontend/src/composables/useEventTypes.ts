@@ -1,5 +1,5 @@
 import { ref, onMounted } from 'vue'
-import { listEventTypes, createEventType } from '@/api/eventTypes'
+import { listEventTypes, createEventType, updateEventType, deleteEventType } from '@/api/eventTypes'
 import type { EventType, EventTypeCreate } from '@/types/api'
 
 export function useEventTypes() {
@@ -25,7 +25,21 @@ export function useEventTypes() {
     return created
   }
 
+  async function update(id: string, data: EventTypeCreate) {
+    const updated = await updateEventType(id, data)
+    const idx = eventTypes.value.findIndex(et => et.id === id)
+    if (idx !== -1) {
+      eventTypes.value[idx] = updated
+    }
+    return updated
+  }
+
+  async function remove(id: string) {
+    await deleteEventType(id)
+    eventTypes.value = eventTypes.value.filter(et => et.id !== id)
+  }
+
   onMounted(load)
 
-  return { eventTypes, loading, error, load, create }
+  return { eventTypes, loading, error, load, create, update, remove }
 }

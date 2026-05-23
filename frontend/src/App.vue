@@ -5,10 +5,18 @@
   <div id="app-shell">
     <header class="header">
       <div class="header-inner">
-        <router-link to="/" class="logo">Booking System</router-link>
+        <router-link to="/" class="logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--mantine-color-orange-6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Calendar
+        </router-link>
         <nav class="nav">
-          <router-link to="/owner">Владелец</router-link>
           <router-link to="/book">Записаться</router-link>
+          <router-link to="/owner">Админка</router-link>
         </nav>
       </div>
     </header>
@@ -42,6 +50,14 @@
   --mantine-color-blue-7: #1c7ed6;
   --mantine-color-blue-8: #1971c2;
   --mantine-color-blue-9: #1864ab;
+  --mantine-color-orange-0: #fff3e0;
+  --mantine-color-orange-1: #ffe0b2;
+  --mantine-color-orange-2: #ffcc80;
+  --mantine-color-orange-3: #ffb74d;
+  --mantine-color-orange-4: #ffa726;
+  --mantine-color-orange-6: #fb8c00;
+  --mantine-color-orange-7: #f57c00;
+  --mantine-color-orange-8: #ef6c00;
   --mantine-color-green-1: #d3f9d8;
   --mantine-color-green-8: #2f9e44;
   --mantine-color-red-7: #f03e3e;
@@ -58,12 +74,14 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--mantine-color-gray-9);
-  background: var(--mantine-color-gray-0);
+  background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 20%, #fff3e0 60%, #f5f5f5 100%);
+  min-height: 100vh;
 }
 
 .header {
-  background: white;
-  border-bottom: 1px solid var(--mantine-color-gray-3);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -79,10 +97,13 @@ body {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: 700;
   font-size: 1.125rem;
   text-decoration: none;
-  color: var(--mantine-color-blue-7);
+  color: var(--mantine-color-gray-9);
 }
 
 .nav {
@@ -97,7 +118,7 @@ body {
 }
 
 .nav a:hover {
-  color: var(--mantine-color-blue-7);
+  color: var(--mantine-color-orange-6);
 }
 
 .main {
@@ -125,13 +146,13 @@ body {
 }
 
 .btn-primary {
-  background: var(--mantine-color-blue-6);
+  background: var(--mantine-color-orange-6);
   color: white;
-  border-color: var(--mantine-color-blue-6);
+  border-color: var(--mantine-color-orange-6);
 }
 
 .btn-primary:hover {
-  background: var(--mantine-color-blue-7);
+  background: var(--mantine-color-orange-7);
 }
 
 .btn-primary:disabled {
@@ -141,12 +162,12 @@ body {
 
 .btn-secondary {
   background: white;
-  color: var(--mantine-color-blue-6);
-  border-color: var(--mantine-color-blue-4);
+  color: var(--mantine-color-orange-6);
+  border-color: var(--mantine-color-orange-6);
 }
 
 .btn-secondary:hover {
-  background: var(--mantine-color-blue-0);
+  background: var(--mantine-color-orange-0);
 }
 
 .btn-sm {

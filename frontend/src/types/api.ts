@@ -28,6 +28,18 @@ export interface Booking {
   guestNotes?: string
 }
 
+export interface BookingEnriched {
+  id: string
+  slotId: string
+  eventTypeId: string
+  guestName: string
+  guestEmail: string
+  guestNotes?: string
+  startTime: string
+  endTime: string
+  eventTypeName: string
+}
+
 export interface BookingCreate {
   slotId: string
   eventTypeId: string

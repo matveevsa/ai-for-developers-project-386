@@ -9,14 +9,13 @@ defineProps<{
 <template>
   <div class="card">
     <div class="card-body">
-      <h3>{{ eventType.name }}</h3>
+      <div class="card-top">
+        <h3>{{ eventType.name }}</h3>
+        <span class="badge">{{ eventType.duration }} мин</span>
+      </div>
       <p v-if="eventType.description" class="muted">
         {{ eventType.description }}
       </p>
-      <span class="badge">{{ eventType.duration }} мин</span>
-    </div>
-    <div class="card-footer">
-      <slot name="action" />
     </div>
   </div>
 </template>
@@ -26,14 +25,24 @@ defineProps<{
   border: 1px solid var(--mantine-color-gray-3);
   border-radius: var(--mantine-radius-md);
   overflow: hidden;
+  background: white;
 }
 .card-body {
   padding: 1rem;
 }
-.card-body h3 {
-  margin: 0 0 0.25rem;
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.card-top h3 {
+  margin: 0;
   font-size: 1.125rem;
 }
+
 .muted {
   color: var(--mantine-color-gray-6);
   font-size: 0.875rem;
@@ -43,12 +52,9 @@ defineProps<{
   display: inline-block;
   padding: 0.125rem 0.5rem;
   font-size: 0.75rem;
-  background: var(--mantine-color-green-1);
-  color: var(--mantine-color-green-8);
+  background: var(--mantine-color-orange-1);
+  color: var(--mantine-color-orange-8);
   border-radius: var(--mantine-radius-xl);
 }
-.card-footer {
-  padding: 0.75rem 1rem;
-  border-top: 1px solid var(--mantine-color-gray-2);
-}
+
 </style>

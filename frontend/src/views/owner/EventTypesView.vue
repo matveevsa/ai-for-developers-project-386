@@ -5,7 +5,7 @@ import EventTypeCard from '@/components/owner/EventTypeCard.vue'
 import EventTypeForm from '@/components/owner/EventTypeForm.vue'
 import type { EventTypeCreate } from '@/types/api'
 
-const { eventTypes, loading, error, create } = useEventTypes()
+const { eventTypes, loading, error, create, remove } = useEventTypes()
 const showForm = ref(false)
 
 async function handleCreate(data: EventTypeCreate) {
@@ -35,6 +35,7 @@ async function handleCreate(data: EventTypeCreate) {
         v-for="et in eventTypes"
         :key="et.id"
         :event-type="et"
+        :on-delete="remove"
       />
     </div>
   </div>

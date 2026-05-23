@@ -15,28 +15,16 @@ const router = createRouter({
     },
     {
       path: '/owner/event-types',
-      name: 'owner-event-types',
-      component: () => import('@/views/owner/EventTypesView.vue'),
+      redirect: () => ({ path: '/owner', query: { tab: 'event-types' } }),
     },
     {
       path: '/owner/bookings',
-      name: 'owner-bookings',
-      component: () => import('@/views/owner/BookingsView.vue'),
+      redirect: () => ({ path: '/owner', query: { tab: 'bookings' } }),
     },
     {
       path: '/book',
       name: 'public-event-types',
       component: () => import('@/views/public/ChooseEventType.vue'),
-    },
-    {
-      path: '/book/:eventTypeId',
-      name: 'public-pick-slot',
-      component: () => import('@/views/public/PickSlot.vue'),
-    },
-    {
-      path: '/book/:eventTypeId/confirm',
-      name: 'public-confirm-booking',
-      component: () => import('@/views/public/ConfirmBooking.vue'),
     },
   ],
 })
