@@ -2,3 +2,4 @@ node_modules/
 spec/node_modules/
 frontend/node_modules/
 spec/tsp-output/
+.idea/
